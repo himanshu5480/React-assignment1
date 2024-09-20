@@ -1,14 +1,18 @@
 import React from "react";
 
-// Convert time to formatted string (same as in StopWatchTimer)
-const formatTime = (time) => {
+// Convert time to formatted string
+const formatTime = (time: number): string => {
   const milliseconds = ("00" + (time % 1000)).slice(-3);
   const seconds = ("0" + Math.floor((time / 1000) % 60)).slice(-2);
   const minutes = ("0" + Math.floor((time / 60000) % 60)).slice(-2);
   return `${minutes}:${seconds}:${milliseconds}`;
 };
 
-const Laps = ({ laps }) => {
+interface LapsProps {
+  laps: number[];
+}
+
+const Laps: React.FC<LapsProps> = ({ laps }) => {
   return (
     <div className="h-[200px]">
       <div className="text-xl font-bold text-white">Laps</div>

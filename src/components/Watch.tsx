@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import Timer from "./Timer";
-import StartButton from "./StartButton";
-import StopButton from "./StopButton";
-import LapButton from "./LapButton";
-import ResetButton from "./ResetButton";
-import Laps from "./Laps";
+import Timer from "./Timer.jsx";
+import StartButton from "./StartButton.jsx";
+import StopButton from "./StopButton.jsx";
+import LapButton from "./LapButton.jsx";
+import ResetButton from "./ResetButton.jsx";
+import Laps from "./Laps.jsx";
 
-const Watch = () => {
-  const [time, setTime] = useState(0); // Time in milliseconds
-  const [isRunning, setIsRunning] = useState(false);
-  const [laps, setLaps] = useState([]);
-  const intervalRef = useRef(null);
+const Watch: React.FC = () => {
+  const [time, setTime] = useState<number>(0); // Time in milliseconds
+  const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [laps, setLaps] = useState<number[]>([]);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const start = () => {
+  const start = (): void => {
     if (!isRunning) {
       setIsRunning(true);
       intervalRef.current = setInterval(() => {
@@ -21,25 +21,28 @@ const Watch = () => {
     }
   };
 
-  const stop = () => {
+  const stop = (): void => {
     if (isRunning) {
-      clearInterval(intervalRef.current);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
       setIsRunning(false);
     }
   };
 
-  const reset = () => {
+  const reset = (): void => {
     if (!isRunning) {
       setTime(0);
       setLaps([]);
     }
   };
 
-  const lap = () => {
+  const lap = (): void => {
     if (isRunning) {
       setLaps([...laps, time]);
     }
   };
+
   return (
     <div className="h-screen bg-slate-500 flex flex-col justify-center items-center">
       <div className="flex flex-col gap-3">
